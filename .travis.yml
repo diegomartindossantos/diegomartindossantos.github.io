@@ -1,4 +1,13 @@
 language: ruby
+
+
+before_install:
+ - gem install bundler
+ 
+install: gem install rails
+
 rvm:
  - 2.7
  - jruby
+
+
