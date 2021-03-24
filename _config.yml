@@ -2,6 +2,7 @@ title: El baúl de Diego
 author: Diego Martín dos Santos
 email:
 description: Cybersecurity Enthusiast & Geek
+remote_theme: jekyll-dash
 
 show_excerpts: false # set to true to show excerpts on the homepage
 
