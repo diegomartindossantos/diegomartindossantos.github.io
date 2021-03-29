@@ -20,7 +20,7 @@ tags: vulnerabilidad
 
 # Explicación de la vulnerabilidad con pseudocódigo
 
-En este fragmento de código podemos ver como, la función proceso ( que simula un servicio que se ejecuta periodicamente ) ejecuta la ruta:
+En este fragmento de código podemos ver como, la función proceso ( que simula un servicio que se ejecuta periodicamente ) ejecuta ruta:
 ```python
 def servicio():  
   ejecutar("C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe") 
@@ -43,7 +43,7 @@ En este otro fragmento de código podemos ver como la función servicio ejecuta 
 
 
 
-# ¿Cómo ejecutara esto Windows?
+# ¿Cómo ejecutará esto Windows?
 
 Buscará subdirectorio por subdirectorio hasta dar con el fichero que busca(sql.exe). Es decir, que si encuentra el fichero antes, usará ese fichero y dejará de buscarlo.
 Pero hay que analizar muy bien la ruta , puesto que , al ser una vulnerabilidad(ERROR) , las rutas que ira comprobando no son muy normales, o intuitivas.
