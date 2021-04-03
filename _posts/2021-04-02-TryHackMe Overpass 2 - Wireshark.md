@@ -77,7 +77,7 @@ En mi caso usé hashcat con la wordlist recomendada por ´´THM´´ : fasttrack.
 # Conseguir la flag User.txt
 
 Primero que todo realize un escaneo de puertos con nmap. 
-El escaneo de nmap arrojó como resultado, entre otro muchos, el puerto 22 abierto, por tanto , al tener ya alguna contraseña.
+El escaneo de nmap arrojó como resultado, entre otro muchos, el puerto 22 abierto.
 
 Así que lo primero que se me ocurrió fue lanzar un ataque de fuerza bruta por SSH con hydra.
 En los usuarios puse todos los del fichero shadow que encontramos en el fichero Wireshark, 
@@ -85,9 +85,9 @@ En los usuarios puse todos los del fichero shadow que encontramos en el fichero 
 
 # Conseguir la flag root.txt
 
-Al entrar como user , comprobe "ls -la"
+Al entrar como user , comprobe ``"ls -la".``
 
-Encontre el fichero ".suid_bash"
+Encontre el fichero ``".suid_bash"``
 
 Intente leerlo pero era ilegible, pero si nos penemos a pensar en la situación,el atacante puede haber dejado algun archivo para escalar privilegios facilmente, (se sobreentiende por el nombre del fichero y el contexto de la maquina de TryHackMe)
 
@@ -95,11 +95,11 @@ Ejecutamos el ficheros, comprobamos permisos, y vemos que nada ha pasado , segui
 
 <a href="https://ibb.co/0hZ3gf5"><img src="https://i.ibb.co/SR0phKS/suid-james.png" alt="suid-james" border="0" /></a>
 
-Por suerte se me ocurrió probar con la flag -p (para mantener los permisos de ejecuccion del script) y funcionó.
+Por suerte se me ocurrió probar con la flag ``-p`` (para mantener los permisos de ejecuccion del script) y funcionó.
 
 <a href="https://ibb.co/27sVtFB"><img src="https://i.ibb.co/VWQnSL8/image.png" alt="image" border="0" /></a>
 
-Como vemos se nos mantuvo el euid=0, que corresponde a root, aunque seguimos siendo james, tenemos permisos de root.
+Como vemos se nos mantuvo el`` euid=0``, que corresponde a root, aunque seguimos siendo james, tenemos permisos de root.
 
 Por tanto ya solo nos queda sacar la flag de root:
 
