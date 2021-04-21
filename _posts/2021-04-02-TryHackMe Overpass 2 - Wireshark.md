@@ -108,7 +108,7 @@ Por tanto ya solo nos queda sacar la flag de root:
 
 
 # Agradecimientos
-[John Hammond (TryHackMe! Overpass 2 Recovering from THE HACK)"](https://www.youtube.com/watch?v=XtySdRYCbiY) 
+[John Hammond (TryHackMe! Overpass 2 Recovering from THE HACK)](https://www.youtube.com/watch?v=XtySdRYCbiY) 
 
 
 
