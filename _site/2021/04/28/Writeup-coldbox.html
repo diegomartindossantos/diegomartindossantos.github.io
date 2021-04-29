@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Writeup: Tryhackme ColddBox. | El baúl de Diego</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Writeup: Tryhackme ColddBox." />
+<meta name="author" content="Diego Martín dos Santos" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="En este post os voy a enseñar a como vulnerar y escalar privilegios en está maquina sencilla de TryHackme." />
+<meta property="og:description" content="En este post os voy a enseñar a como vulnerar y escalar privilegios en está maquina sencilla de TryHackme." />
+<link rel="canonical" href="http://localhost:4000/2021/04/28/Writeup-coldbox.html" />
+<meta property="og:url" content="http://localhost:4000/2021/04/28/Writeup-coldbox.html" />
+<meta property="og:site_name" content="El baúl de Diego" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-28T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Writeup: Tryhackme ColddBox." />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/2021/04/28/Writeup-coldbox.html","headline":"Writeup: Tryhackme ColddBox.","dateModified":"2021-04-28T00:00:00+02:00","datePublished":"2021-04-28T00:00:00+02:00","author":{"@type":"Person","name":"Diego Martín dos Santos"},"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021/04/28/Writeup-coldbox.html"},"description":"En este post os voy a enseñar a como vulnerar y escalar privilegios en está maquina sencilla de TryHackme.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="El baúl de Diego" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">El baúl de Diego<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-purple-hover" href="https://github.com/dimineko"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    
+        <img src="
+            https://gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=256
+        " class="author-avatar" alt="Avatar" />
+    
+Cybersecurity Enthusiast & Geek
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Writeup: Tryhackme ColddBox.</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/ejpt,elearn,certificacio/">ejpt,elearn,certificacio</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 28 Apr 2021</div>
+  
+  <noscript>
+    <div class="post-description">En este post os voy a enseñar a como vulnerar y escalar privilegios en está maquina sencilla de TryHackme.</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <h1 id="enumeración">Enumeración</h1>
+<p>NMAP: Escaneo de puertos.</p>
+
+<p><a href="https://ibb.co/sySrwwy"><img src="https://i.ibb.co/J5LP775/mmap1.png" alt="mmap1" border="0" /></a></p>
+
+<p>NMAP: Analísis de los puertos abiertos.</p>
+
+<p><a href="https://ibb.co/bKJ5rqZ"><img src="https://i.ibb.co/NyS2LQP/image.png" alt="image" border="0" /></a></p>
+
+<p>Wappalyzer &amp; Whatweb: Descubrir con que tecnologías esta hecho la web.</p>
+
+<p><a href="https://imgbb.com/"><img src="https://i.ibb.co/tbVN58T/image.png" alt="image" border="0" /></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/b1DHTQ4/image.png" alt="image" border="0" /></a></p>
+
+<p>Ffuf: Enumeración de directorios(aka Fuzzing).</p>
+
+<p><a href="https://ibb.co/MM9s4QQ"><img src="https://i.ibb.co/0hQcSvv/image.png" alt="image" border="0" /></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/phKtSFY/image.png" alt="image" border="0" /></a></p>
+
+<p>WPScan: Escaneo de WordPress, y enumeración de usuarios.</p>
+
+<p><a href="https://ibb.co/qYfHzvp"><img src="https://i.ibb.co/N2P0XMK/image.png" alt="image" border="0" /></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/phKtSFY/image.png" alt="image" border="0" /></a></p>
+
+<h1 id="explotacion">EXPLOTACION</h1>
+<p>WPScan: Bruteforce al login de WP (encontrado haciendo fuzzing) con los usuarios encontrados en WPScan.</p>
+
+<p><a href="https://ibb.co/7XkjZJq"><img src="https://i.ibb.co/bPbQCgk/image.png" alt="image" border="0" /></a></p>
+
+<p>No pudé hacer captura de los resultado pero aproximadamente en 1 minuto o menos la contraseña fue crackeado.</p>
+
+<p>Accedemos a WP accediendo al login <code class="language-plaintext highlighter-rouge">wp-admin</code>:</p>
+
+<p><a href="https://ibb.co/JryMSL6"><img src="https://i.ibb.co/ygYbxTv/image.png" alt="image" border="0" /></a></p>
+
+<p>Comprobamos si somos administradores accediendo al apartado de usuarios, y efectivamente lo somos:</p>
+
+<p><a href="https://ibb.co/KL0wT6Y"><img src="https://i.ibb.co/GtxTz7X/image.png" alt="image" border="0" /></a></p>
+
+<p>Buscando en internet como conseguir una reverse shell siendo admin de WP encontré que podemos injectar una reverse shell en el fichero 404.php de la página web. En mi caso subí una reverse de php.</p>
+
+<p><a href="https://ibb.co/X5Cz0C6"><img src="https://i.ibb.co/09Gf4G1/image.png" alt="image" border="0" /></a></p>
+
+<p>Nos ponemos a la escucha…y ejecutamos la shell mediante  la ruta <a href="http://ip/wp-content/themes/twentyfifteen/404.php">http://ip/wp-content/themes/twentyfifteen/404.php</a></p>
+
+<p><a href="https://ibb.co/qpVPDwC"><img src="https://i.ibb.co/YhwqNGX/image.png" alt="image" border="0" /></a></p>
+
+<p>Mejoramos la shell</p>
+
+<ul>
+  <li>script /dev/null</li>
+  <li>Ctrl+Z</li>
+  <li>stty raw -echo;fg</li>
+  <li>reset</li>
+  <li>export TERM=xterm</li>
+  <li>export SHELL=shell</li>
+</ul>
+
+<p><a href="https://ibb.co/Wt2gSF5"><img src="https://i.ibb.co/FVDgGJ3/image.png" alt="image" border="0" /></a></p>
+
+<p>Si exploramos el sistema encontramos /var/www/html/wp-config.php</p>
+
+<p><a href="https://imgbb.com/"><img src="https://i.ibb.co/sF7NQ8N/image.png" alt="image" border="0" /></a></p>
+
+<p>Nos podríamos loguear a la base de datos con los datos que acabamos de encontrar, pero si recordamos, tenemos un puerto alojando ssh. Podríamos probar a ver si estamos ante un caso de reutilización de credenciales…</p>
+
+<p><a href="https://imgbb.com/"><img src="https://i.ibb.co/f9dRJLg/image.png" alt="image" border="0" /></a></p>
+
+<h1 id="escalada-de-privilegios">ESCALADA DE PRIVILEGIOS.</h1>
+<p>En esta máquina tenemos 3 “binarios” que se explotan usando la misma “mala configuración”.
+Para descubrir estos binarios ejecutamos “sudo -l”
+Este comando nos arrojara que podemos ejecutar como sudo “FTP”,”VIM”, y por último “CHMOD”</p>
+
+<ul>
+  <li>FTP</li>
+</ul>
+
+<p>Ejecutamos ftp como sudo y luego podemos ejecutar cualquier comandos en contexto privilegiado.</p>
+
+<p><a href="https://imgbb.com/"><img src="https://i.ibb.co/4s6gSVP/image.png" alt="image" border="0" /></a></p>
+
+<ul>
+  <li>CHMOD</li>
+</ul>
+
+<p>Ejecutamos “sudo chmod 4777 /bin/bash” para asignar el bit suid a /bin/bash y poder ejecutarlo en un contexto privilegiado.
+Con <code class="language-plaintext highlighter-rouge">sudo /bin/bash -p</code> ejecutas /bin/bash como root y con <code class="language-plaintext highlighter-rouge">-p</code> le indicamos que mantenga los privilegios al terminar de ejecutar el comando.</p>
+
+<p><a href="https://imgbb.com/"><img src="https://i.ibb.co/cvSGG1N/image.png" alt="image" border="0" /></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/wYG2qfb/image.png" alt="image" border="0" /></a></p>
+
+<ul>
+  <li>VIM</li>
+</ul>
+
+<p>Con VIM es tan simple como que VIM ejecutará lo que pongamos como el usuario que usemos. Si añadimos sudo, lo estaremos ejecutando en un contexto privilegiado.
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/jMyCLT8/image.png" alt="image" border="0" /></a></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2021/04/28/Writeup-coldbox.html';
+     this.page.identifier = '/2021/04/28/Writeup-coldbox';
+     this.page.title = 'Writeup: Tryhackme ColddBox.';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//bitbrain-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/04/27/Windows-Pentesting-CheatSheet.html">
+            Windows Pentesting CheatSheet
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/04/20/Mi-experiencia-con-la-certificaci%C3%B3n-eJPT.html">
+            eJPT: Mi experiencia con esta certificación.
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/04/17/Tipos-de-shell.html">
+            Tipos de Shell: Reverse,Bind, y como pueden ser según su interactividad
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/ejpt%2Celearn%2Ccertificacio/" class="set-5">ejpt,elearn,certificacio</a> <a href="/tag/shell%2Creverse/" class="set-1">shell,reverse</a> <a href="/tag/tryhackme%2C/" class="set-1">tryhackme,</a> <a href="/tag/vulnerabilidad/" class="set-5">vulnerabilidad</a> <a href="/tag/wireshark/" class="set-1">wireshark</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'En este post os voy a enseñar a como vulnerar y escalar privilegios en está maquina sencilla de TryHackme.';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

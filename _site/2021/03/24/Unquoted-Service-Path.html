@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Vulnerabilidad: Unquoted Service Path | El baúl de Diego</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Vulnerabilidad: Unquoted Service Path" />
+<meta name="author" content="Diego Martín dos Santos" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="En este post veremos en que consiste la vulnerabilidad Unquoted Service Path, que requísitos tenemos que cumplir para poder explotarla, y como explotarla." />
+<meta property="og:description" content="En este post veremos en que consiste la vulnerabilidad Unquoted Service Path, que requísitos tenemos que cumplir para poder explotarla, y como explotarla." />
+<link rel="canonical" href="http://localhost:4000/2021/03/24/Unquoted-Service-Path.html" />
+<meta property="og:url" content="http://localhost:4000/2021/03/24/Unquoted-Service-Path.html" />
+<meta property="og:site_name" content="El baúl de Diego" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-24T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Vulnerabilidad: Unquoted Service Path" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/2021/03/24/Unquoted-Service-Path.html","headline":"Vulnerabilidad: Unquoted Service Path","dateModified":"2021-03-24T00:00:00+01:00","datePublished":"2021-03-24T00:00:00+01:00","author":{"@type":"Person","name":"Diego Martín dos Santos"},"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021/03/24/Unquoted-Service-Path.html"},"description":"En este post veremos en que consiste la vulnerabilidad Unquoted Service Path, que requísitos tenemos que cumplir para poder explotarla, y como explotarla.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="El baúl de Diego" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">El baúl de Diego<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-purple-hover" href="https://github.com/dimineko"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    
+        <img src="
+            https://gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=256
+        " class="author-avatar" alt="Avatar" />
+    
+Cybersecurity Enthusiast & Geek
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Vulnerabilidad: Unquoted Service Path</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/vulnerabilidad/">vulnerabilidad</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 24 Mar 2021</div>
+  
+  <noscript>
+    <div class="post-description">En este post veremos en que consiste la vulnerabilidad Unquoted Service Path, que requísitos tenemos que cumplir para poder explotarla, y como explotarla.</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <h1 id="requisitos">Requisitos</h1>
+
+<ul>
+  <li>Disponer de alguna forma de subir archivos , ya sea o bien teniendo una shell (Netcat, Meterpreter, etc…) o bien tener alguna forma de subir ficheros, ya sea RFI o LFI,o como sea que hayais vulnerado la máquina en la que quereís escalar privilegios.</li>
+  <li>Si la shell es de un usuario sin privilegios,nos bastaría con poder subir (si no se pueden subir ficheros, pero si crearlos, podría funcionar si somos capaces de crear un ejecutable completamente funcional, sin necesidad de ejecutarlo)</li>
+  <li>Tener en la máquina que estamos atacando un servicio el cual ejecuta un fichero. Este fichero puede ser, o bien ejecutado cada cierto tiempo ,o bien un proceso/servicio que se active con cierto evento/trigger.(EJ: Iniciar sesión.)</li>
+</ul>
+
+<h1 id="explicación-de-la-vulnerabilidad-con-pseudocódigo">Explicación de la vulnerabilidad con pseudocódigo</h1>
+
+<p>En este fragmento de código podemos ver como, la función proceso ( que simula un servicio que se ejecuta periodicamente ) ejecuta ruta:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">servicio</span><span class="p">():</span>  
+  <span class="n">ejecutar</span><span class="p">(</span><span class="s">"C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe"</span><span class="p">)</span> 
+  <span class="c1">#El proceso quiere ejecutar la 
+</span>  <span class="c1">#ruta "C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe" (con comillas)
+</span></code></pre></div></div>
+
+<p>En este caso, al estar la ruta con comillas, no importa que tenga espacios, puesto que es una String.
+Por tanto el servicio que se ejecuta periodicamente ejecutara sin problemas “C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe”.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">servicio</span><span class="p">():</span>  
+  <span class="n">ejecutar</span><span class="p">(</span><span class="n">C</span><span class="p">:</span>\<span class="n">CARPETA</span> <span class="n">UNO</span>\<span class="n">CARPETA</span> <span class="n">DOS</span>\<span class="n">CARPETA</span> <span class="n">TRES</span>\<span class="n">sql</span><span class="p">.</span><span class="n">exe</span><span class="p">)</span> 
+  <span class="c1">#El proceso quiere ejecutar la 
+</span>  <span class="c1">#ruta C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe (sin comillas)
+</span></code></pre></div></div>
+<p>En este otro fragmento de código podemos ver como la función servicio ejecuta la ruta <code class="language-plaintext highlighter-rouge">C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe</code> , (vease que no lleva comillas)</p>
+
+<h1 id="cómo-ejecutará-esto-windows">¿Cómo ejecutará esto Windows?</h1>
+
+<p>Buscará subdirectorio por subdirectorio hasta dar con el fichero que busca(sql.exe). Es decir, que si encuentra el fichero antes, usará ese fichero y dejará de buscarlo.
+Pero hay que analizar muy bien la ruta , puesto que , al ser una vulnerabilidad(ERROR) , las rutas que ira comprobando no son muy normales, o intuitivas.</p>
+
+<p>Por tanto, si la ruta del ejecutable que se esta ejecutando es: <code class="language-plaintext highlighter-rouge">C:\CARPETA UNO\CARPETA DOS\CARPETA TRES\sql.exe</code> , será recorrida de la siguiente manera:</p>
+<pre><code class="language-ps1">"C:\PRIMERA.exe"
+"C:\PRIMERA CARPETA/segunda.exe"
+"C:\PRIMERA CARPETA/SEGUNDA CARPETA/tercera.exe"
+"C:\PRIMERA CARPETA/SEGUNDA CARPETA/TERCERA CARPETA/sql.exe"
+</code></pre>
+
+<h1 id="-explotación-de-la-vulnerabilidad"><i class="fas fa-bomb"></i> Explotación de la vulnerabilidad</h1>
+
+<p>Por tanto, visto lo anteriormente , y si cumplimos las condiciones previamente citadas, si colocamos por ejemplo un payload <code class="language-plaintext highlighter-rouge">segunda.exe</code> hecho en powershell/cmd en una ruta previa a la ruta final , vease:</p>
+
+<pre><code class="language-ps1">"C:\PRIMERA CARPETA/segunda.exe"
+</code></pre>
+
+<p>…siendo <code class="language-plaintext highlighter-rouge">segunda.exe</code> nuestro payload/reverse shell o lo que queraís ejecutar como administrador,
+conseguiremos una reverse shell (en este ejemplo) como administrador (o el usuario que este ejecutando el servicio/tarea).</p>
+
+<h1 id="-creacion-de-un-payload-en-msfvenom"><i class="fas fa-bomb"></i> Creacion de un payload en Msfvenom</h1>
+
+<p>La creación del payload y del listener pueden hacerse de manera manual, es recomendable hacerlo aunque sea más díficil si se quiere aprender, pero aqui usaremos <code class="language-plaintext highlighter-rouge">metasploit</code> y <code class="language-plaintext highlighter-rouge">msfvenom</code> para facilitar que se entienda el proceso.</p>
+
+<p><a href="https://ibb.co/QnJWCjJ"><img src="https://i.ibb.co/d6fNLJf/ups-msfvenom.png" alt="ups-msfvenom" border="0" /></a></p>
+
+<h1 id="-poniendonos-a-la-escucha-con-metasploit"><i class="fas fa-headphones-alt"></i> Poniendonos a la escucha con Metasploit</h1>
+<p><a href="https://ibb.co/kgH8tFy"><img src="https://i.ibb.co/XZ2sqT4/MSFCONSOLE-ESCUCHAR.png" alt="MSFCONSOLE-ESCUCHAR" border="0" /></a>
+<a href="https://ibb.co/0yh4qJj"><img src="https://i.ibb.co/xqJ9h5S/EXPLOIT.png" alt="EXPLOIT" border="0" /></a></p>
+
+<h1 id="creación-de-esta-vulnerabilidad-para-testear-en-entornos-controlados">Creación de esta vulnerabilidad para testear en entornos controlados…</h1>
+<p>Si queremos probar esta vulnerabilidad,podemos crear un servido llamado <code class="language-plaintext highlighter-rouge">SERVICIOVULNERABLE</code></p>
+
+<pre><code class="language-ps1">sc create SERVICIOVULNERABLE start= auto binPath= "C:\PRIMERA CARPETA\SEGUNDA CARPETA\TERCERA CARPETA\sql.exe" DisplayName= SERVICIOVULNERABLE
+</code></pre>
+<p><a href="https://ibb.co/8rvBh6B"><img src="https://i.ibb.co/m9ZBx6B/image.png" alt="image" border="0" /></a></p>
+
+<p>NOTA: Las comillas son necesaria para el uso del comando, pero la creación se esta llevando a cabo sin comillas, se puede comprobar con el siguiente comando,el cúal nos mostrara todos los procesos con rutas sin entrecomillar:</p>
+
+<pre><code class="language-ps1">wmic service get name,displayname,pathname,startmode |findstr /i /v “C:\Windows\\” | findstr /i /v “””
+</code></pre>
+<p><a href="https://ibb.co/r2ZF9gG"><img src="https://i.ibb.co/4RjKkcZ/image.png" alt="image" border="0" /></a>
+Para simular que se ejecuta de manera periodica podemos simplemente encender , parar y reiniciar,respectivamente,el servicio :</p>
+
+<pre><code class="language-ps1">net start SERVICIOVULNERABLE
+net stop SERVICIOVULNERABLE
+net restart SERVICIOVULNERABLE
+</code></pre>
+<h1 id="-cómo-protegernos-de-esta-vulnerabilidad"><i class="fas fa-shield-alt"></i> ¿Cómo protegernos de esta vulnerabilidad?</h1>
+
+<p>Para protegernos de esta vulnerabilidad,simplemente tenemos que añadir comillas a nuestra rutas.
+Al crear servicios, si queremos que estos sean seguros, hay que jugar con los <code class="language-plaintext highlighter-rouge">slash</code> para introducir comillas dentro de las comillas del propio comando,por ejemplo:</p>
+<pre><code class="language-ps1">sc create ServicioNoVulnerable start= auto binPath= "\"RUTA\DEL\SERVICIO/EJECUTABLE"\" DisplayName= ServicioNoVulnerable
+</code></pre>
+
+<h1 id="agradecimientos">Agradecimientos</h1>
+<p><a href="https://medium.com/@SumitVerma101/windows-privilege-escalation-part-1-unquoted-service-path-c7a011a8d8ae">Sumit Verma con su post “Windows Privilege Escalation — Part 1 (Unquoted Service Path)”</a></p>
+
+<p><a href="https://hackmd.io/@EvilOrez/unquotedservices">@EvilOrez con su Post “MICROSOFT’S UNQUOTED SERVICES”</a></p>
+
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2021/03/24/Unquoted-Service-Path.html';
+     this.page.identifier = '/2021/03/24/Unquoted Service Path';
+     this.page.title = 'Vulnerabilidad: Unquoted Service Path';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//bitbrain-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/04/28/Writeup-coldbox.html">
+            Writeup: Tryhackme ColddBox.
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/04/27/Windows-Pentesting-CheatSheet.html">
+            Windows Pentesting CheatSheet
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/04/20/Mi-experiencia-con-la-certificaci%C3%B3n-eJPT.html">
+            eJPT: Mi experiencia con esta certificación.
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/ejpt%2Celearn%2Ccertificacio/" class="set-5">ejpt,elearn,certificacio</a> <a href="/tag/shell%2Creverse/" class="set-1">shell,reverse</a> <a href="/tag/tryhackme%2C/" class="set-1">tryhackme,</a> <a href="/tag/vulnerabilidad/" class="set-5">vulnerabilidad</a> <a href="/tag/wireshark/" class="set-1">wireshark</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'En este post veremos en que consiste la vulnerabilidad Unquoted Service Path, que requísitos tenemos que cumplir para poder explotarla, y como explotarla.';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
