@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-05-07T17:01:04+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">El baúl de Diego</title><subtitle>Cybersecurity Enthusiast &amp; Geek</subtitle><author><name>Diego Martín dos Santos</name></author><entry><title type="html">Ataque Active Directory: ‘LLMNR’</title><link href="http://localhost:4000/2021/05/07/Captura-de-hashes-con-responder.html" rel="alternate" type="text/html" title="Ataque Active Directory: ‘LLMNR’" /><published>2021-05-07T00:00:00+02:00</published><updated>2021-05-07T00:00:00+02:00</updated><id>http://localhost:4000/2021/05/07/Captura%20de%20hashes%20con%20responder</id><content type="html" xml:base="http://localhost:4000/2021/05/07/Captura-de-hashes-con-responder.html">&lt;h1 id=&quot;en-que-consiste-el-ataque-y-la-herramienta-responder-&quot;&gt;¿En que consiste el ataque y la herramienta “RESPONDER” ?&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-05-09T01:38:13+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">El baúl de Diego</title><subtitle>Cybersecurity Enthusiast &amp; Geek</subtitle><author><name>Diego Martín dos Santos</name></author><entry><title type="html">Ataque Active Directory: Envenenamiento del tráfico &amp;amp; servicio ‘LLMNR’ y como defendernos de estos ataques.</title><link href="http://localhost:4000/2021/05/07/Captura-de-hashes-con-responder.html" rel="alternate" type="text/html" title="Ataque Active Directory: Envenenamiento del tráfico &amp;amp; servicio ‘LLMNR’ y como defendernos de estos ataques." /><published>2021-05-07T00:00:00+02:00</published><updated>2021-05-07T00:00:00+02:00</updated><id>http://localhost:4000/2021/05/07/Captura%20de%20hashes%20con%20responder</id><content type="html" xml:base="http://localhost:4000/2021/05/07/Captura-de-hashes-con-responder.html">&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=s5KtUur8Mzs&amp;amp;t=7s&quot;&gt;Vídeo en mi canal de YT explicando como escuchar &amp;amp; envenenar,obtener hashes &amp;amp; crackear hashes.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;en-que-consiste-el-ataque-y-la-herramienta-responder-&quot;&gt;¿En que consiste el ataque y la herramienta “RESPONDER” ?&lt;/h1&gt;
 
 &lt;p&gt;Cuando un equipo Windows no es capaz de “resolver” &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(encontrar)&lt;/code&gt; otro equipo usando DNS… usá el protocolo LLMNR protocol (Link-Local Multicast Name Resolution) para preguntar a los equipos cercanos si alguien sabe “resolverlo” o llegar a el…&lt;/p&gt;
 
@@ -24,7 +26,7 @@
   &lt;li&gt;Con &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt; indicamos que se inicie el servidor WPAD ‘rogue proxy server’.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Como vemos nos empezará a llegar mucho tráfico , generalmente sin importancia.&lt;/p&gt;
+&lt;p&gt;Como vemos nos empezará a llegar mucho tráfico , generalmente sin importancia. Este tráfico será envenenado por nuestra herramienta “responder”.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://ibb.co/0Vvmxzt&quot;&gt;&lt;img src=&quot;https://i.ibb.co/S7G5zZr/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
@@ -50,7 +52,25 @@
 
 &lt;p&gt;&lt;a href=&quot;https://ibb.co/Kxfkr0r&quot;&gt;&lt;img src=&quot;https://i.ibb.co/nMYvLgL/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;Y ya con unas credenciales, ya sean de ADMIN o no, podemos intentar multitud de otros escaneos.&lt;/b&gt;&lt;/p&gt;</content><author><name>Diego Martín dos Santos</name></author><category term="tryhackme," /><category term="wireshark" /><summary type="html">¿En que consiste el ataque y la herramienta “RESPONDER” ?</summary></entry><entry><title type="html">Explotación de la vulnerabilidad LD_PRELOAD Capabilties</title><link href="http://localhost:4000/2021/04/30/LD-PRELOAD.html" rel="alternate" type="text/html" title="Explotación de la vulnerabilidad LD_PRELOAD Capabilties" /><published>2021-04-30T00:00:00+02:00</published><updated>2021-04-30T00:00:00+02:00</updated><id>http://localhost:4000/2021/04/30/LD-PRELOAD</id><content type="html" xml:base="http://localhost:4000/2021/04/30/LD-PRELOAD.html">&lt;h1 id=&quot;situacion&quot;&gt;Situacion&lt;/h1&gt;
+&lt;p&gt;&lt;b&gt;Y ya con unas credenciales, ya sean de ADMIN o no, podemos intentar multitud de otros escaneos.&lt;/b&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;como-defenderse-de-esto&quot;&gt;Como defenderse de esto.&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;La forma más fácil es seleccionar crear una GPO que deshabilite el servicio LLMNR (Configuración del equipo&amp;gt;Directivas&amp;gt;Plantillas administrativas de Windows&amp;gt;Red&amp;gt;Cliente DNS&amp;gt;…) Vease la imágen del final.&lt;/li&gt;
+  &lt;li&gt;Si nuestra empresa necesita, por lo que sea, este servicio, lo único que podemos hacer es cercionarnos que todas las contraseñas de la empresa son complejas. De esta manera, por mucho que roben los hashes, no podrán crackearla ( al menos con fuerza bruta )&lt;/li&gt;
+  &lt;li&gt;Que una contraseña sea compleja quiere decir:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;–Maýusculas&lt;/p&gt;
+
+&lt;p&gt;–Minúsculas&lt;/p&gt;
+
+&lt;p&gt;–Símbolos&lt;/p&gt;
+
+&lt;p&gt;–Y lo más importante: Que no sea común. Todo lo anterior da igual si la contraseña es común. Vease,de ejemplo, mi video en Youtube, que la contraseña era “password_123” (con simbolos y números) pero al ser una contraseña común que esta en las listas de cracking, pudimos crackearla.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ibb.co/GWz2hfp&quot;&gt;&lt;img src=&quot;https://i.ibb.co/gSkTnb9/image.png&quot; alt=&quot;image&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Diego Martín dos Santos</name></author><category term="PENTESTING," /><category term="AD" /><summary type="html">Vídeo en mi canal de YT explicando como escuchar &amp;amp; envenenar,obtener hashes &amp;amp; crackear hashes.</summary></entry><entry><title type="html">Explotación de la vulnerabilidad LD_PRELOAD Capabilties</title><link href="http://localhost:4000/2021/04/30/LD-PRELOAD.html" rel="alternate" type="text/html" title="Explotación de la vulnerabilidad LD_PRELOAD Capabilties" /><published>2021-04-30T00:00:00+02:00</published><updated>2021-04-30T00:00:00+02:00</updated><id>http://localhost:4000/2021/04/30/LD-PRELOAD</id><content type="html" xml:base="http://localhost:4000/2021/04/30/LD-PRELOAD.html">&lt;h1 id=&quot;situacion&quot;&gt;Situacion&lt;/h1&gt;
 &lt;p&gt;Me encontraba realizando la máquina Keldagrim de TryHackMe.
 Había conseguido acceso NO PRIVILEGIADO a la máquina víctima y no encontraba véctores de ataque para escalar privilegios, ahí fue cuando decídi usar “LINPEAS.SH” para automatizar la enumeración.&lt;/p&gt;
 

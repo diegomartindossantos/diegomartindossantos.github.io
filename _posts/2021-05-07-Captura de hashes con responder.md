@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "Ataque Active Directory: Envenenamiento del tráfico & servicio 'LLMNR'"
-description: En este post entenderemos en que consiste el ataque LLMNR y como hacer uso de el, envenenando el tráfico con la herramienta "responder".
+title:  "Ataque Active Directory: Envenenamiento del tráfico & servicio 'LLMNR' y como defendernos de estos ataques."
+description: En este post entenderemos en que consiste el ataque LLMNR y como hacer uso de el, envenenando el tráfico con la herramienta "responder". También aprenderemos a como defendernos.
 
-tags: tryhackme, wireshark
+tags: PENTESTING, AD
 ---
 
 
@@ -68,5 +68,22 @@ De tal modo que si desde cualquier equipo que esté dentro de la red en la que e
 <b>Y ya con unas credenciales, ya sean de ADMIN o no, podemos intentar multitud de otros escaneos.</b>
  
 
+# Como defenderse de esto.
+
+* La forma más fácil es seleccionar crear una GPO que deshabilite el servicio LLMNR (Configuración del equipo>Directivas>Plantillas administrativas de Windows>Red>Cliente DNS>...) Vease la imágen del final.
+* Si nuestra empresa necesita, por lo que sea, este servicio, lo único que podemos hacer es cercionarnos que todas las contraseñas de la empresa son complejas. De esta manera, por mucho que roben los hashes, no podrán crackearla ( al menos con fuerza bruta )
+* Que una contraseña sea compleja quiere decir:
+    
+
+--Maýusculas 
 
 
+--Minúsculas
+
+
+--Símbolos
+
+--Y lo más importante: Que no sea común. Todo lo anterior da igual si la contraseña es común. Vease,de ejemplo, mi video en Youtube, que la contraseña era "password_123" (con simbolos y números) pero al ser una contraseña común que esta en las listas de cracking, pudimos crackearla.
+
+
+<a href="https://ibb.co/GWz2hfp"><img src="https://i.ibb.co/gSkTnb9/image.png" alt="image" border="0" /></a>
